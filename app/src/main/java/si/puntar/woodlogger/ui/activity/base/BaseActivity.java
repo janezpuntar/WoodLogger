@@ -1,6 +1,9 @@
 package si.puntar.woodlogger.ui.activity.base;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 
 /**
@@ -8,6 +11,9 @@ import android.support.v7.app.ActionBarActivity;
  */
 public abstract class BaseActivity extends ActionBarActivity {
 
+    protected abstract void inject();
+
+    @LayoutRes
     protected abstract int getLayout();
 
     @Override
@@ -15,5 +21,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
 
+        inject();
     }
 }

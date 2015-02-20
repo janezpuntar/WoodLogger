@@ -1,20 +1,42 @@
 package si.puntar.woodlogger.ui.activity.main;
 
-import android.app.Activity;
-import android.os.PersistableBundle;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
+import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import si.puntar.woodlogger.R;
+import si.puntar.woodlogger.app.App;
+import si.puntar.woodlogger.ui.activity.addMeasurement.MeasurementActivity;
 import si.puntar.woodlogger.ui.activity.base.BaseActivity;
+import si.puntar.woodlogger.ui.fragment.addMeasurement.AddMeasurementFragment;
+import timber.log.Timber;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainView {
+
+    @Inject MainPresenter presenter;
+
+    @InjectView(R.id.tb_header) Toolbar toolbar;
+    @InjectView(R.id.rv_previous_measurements) RecyclerView rvPreviousMeasurement;
+
+    @Override
+    protected void inject() {
+        MainComponent mainComponent = Dagger_MainComponent.builder()
+                .appComponent(App.get(this)
+                .getComponent())
+                .mainModule(new MainModule(this)).build();
+        mainComponent.inject(this);
+    }
 
     @Override
     protected int getLayout() {
@@ -22,24 +44,32 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ButterKnife.inject(this);
+        setSupportActionBar(toolbar);
+
+        rvPreviousMeasurement.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menu_add_measurement:
+                Intent addMeasureActivity = new Intent(this, MeasurementActivity.class);
+                startActivity(addMeasureActivity);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_add_measurement_root"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.addMeasurement.MeasurementActivity">
+
+    <Button
+        android:id="@+id/btn_change_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="4 m" />
+
+    <EditText
+        android:id="@+id/et_log_diameter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingRight="@dimen/edit_text_padding_right"
+        android:paddingEnd="@dimen/edit_text_padding_right"
+        android:inputType="numberDecimal"
+        android:imeOptions="actionDone"
+        android:gravity="end"
+        tools:text="4"
+        />
+
+    <Button
+        android:id="@+id/btn_save_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add" />
+
+</LinearLayout>
