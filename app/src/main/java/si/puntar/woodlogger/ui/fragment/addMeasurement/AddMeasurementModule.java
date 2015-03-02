@@ -15,11 +15,13 @@ public class AddMeasurementModule {
         this.view = view;
     }
 
-    @Provides AddMeasurementView provideView() {
+    @Provides
+    AddMeasurementView provideView() {
         return view;
     }
 
-    @Provides AddMeasurementPresenter providePresenter(AddMeasurementView view) {
+    @Provides
+    AddMeasurementPresenter providePresenter(AddMeasurementView view) {
         return new AddMeasurementPresenterImpl(view);
     }
 }

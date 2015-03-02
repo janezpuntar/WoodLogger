@@ -5,9 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -15,9 +13,8 @@ import butterknife.InjectView;
 import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.app.App;
 import si.puntar.woodlogger.data.model.Log;
-import si.puntar.woodlogger.ui.activity.main.Dagger_MainComponent;
-import si.puntar.woodlogger.ui.activity.main.MainComponent;
-import si.puntar.woodlogger.ui.activity.main.MainModule;
+import si.puntar.woodlogger.data.model.LogLength;
+//import si.puntar.woodlogger.ui.dialog.logLenght.LogLengthDialog;
 import si.puntar.woodlogger.ui.fragment.baseFragment.BaseFragment;
 
 /**
@@ -26,20 +23,26 @@ import si.puntar.woodlogger.ui.fragment.baseFragment.BaseFragment;
 public class AddMeasurementFragment extends BaseFragment implements
         AddMeasurementView,
         EditText.OnEditorActionListener,
-        View.OnClickListener {
+        View.OnClickListener, DialogChooseOptionCallback {
 
-    @Inject AddMeasurementPresenter presenter;
+    private static final int LOG_LENGTH_DIALOG_RQ = 2333;
 
-    @InjectView(R.id.btn_change_length) Button btnChangeLength;
-    @InjectView(R.id.et_log_diameter) EditText etLogDiameter;
-    @InjectView(R.id.btn_save_data) Button btnSaveData;
+    @Inject
+    AddMeasurementPresenter presenter;
+
+    @InjectView(R.id.btn_change_length)
+    Button btnChangeLength;
+    @InjectView(R.id.et_log_diameter)
+    EditText etLogDiameter;
+    @InjectView(R.id.btn_save_data)
+    Button btnSaveData;
 
     private OnAddMeasurementFragmentListener listener;
 
     @Override
     protected void inject() {
         AddMeasurementComponent addMeasComponent = Dagger_AddMeasurementComponent.builder()
-                .appComponent(App.get(getActivity()).getComponent())
+                .appComponent(App.get(getActivity()).getAppComponent())
                 .addMeasurementModule(new AddMeasurementModule(this)).build();
 
         addMeasComponent.inject(this);
@@ -75,6 +78,9 @@ public class AddMeasurementFragment extends BaseFragment implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_change_length:
+//                LogLengthDialog dialog = LogLengthDialog.newInstance();
+//                dialog.setTargetFragment(this, LOG_LENGTH_DIALOG_RQ);
+//                dialog.show(getFragmentManager(), LogLengthDialog.TAG);
 
                 break;
             case R.id.btn_save_data:
@@ -92,9 +98,13 @@ public class AddMeasurementFragment extends BaseFragment implements
         listener.saveMeasurement(log);
     }
 
-    public interface OnAddMeasurementFragmentListener {
-
-        void saveMeasurement(Log log);
-
+    @Override
+    public void selectedOption(LogLength logLength) {
+        presenter.setCurrentLogLength(logLength);
     }
+
+    public interface OnAddMeasurementFragmentListener {
+        void saveMeasurement(Log log);
+    }
+
 }

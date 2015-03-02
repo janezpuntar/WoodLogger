@@ -1,23 +1,34 @@
 package si.puntar.woodlogger.data.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * Created by Puntar on 2/12/15.
  */
+@DatabaseTable(tableName = Log.NameHelper.TABLE_NAME)
 public class Log {
 
+    @DatabaseField(generatedId = true, columnName = NameHelper.LOG_ID)
     private long logId;
-    private double length;
+
+    @DatabaseField(foreign = true,
+            columnName = NameHelper.LENGTH)
+    private LogLength logLength;
+
+    @DatabaseField(generatedId = true, columnName = NameHelper.DIAMETER)
     private double diameter;
 
-    public Log() { }
+    public Log() {
+    }
 
-    public Log(double length, double diameter) {
-        this.length = length;
+    public Log(LogLength length, double diameter) {
+        this.logLength = length;
         this.diameter = diameter;
     }
 
     public double getLength() {
-        return length;
+        return logLength.getLength();
     }
 
     public double getDiameter() {
@@ -25,12 +36,12 @@ public class Log {
     }
 
     public double getVolume() {
-        return Math.PI * Math.pow((diameter / 2), 2) * length;
+        return Math.PI * Math.pow((diameter / 2), 2) * logLength.getLength();
     }
 
     public static class NameHelper {
-        public static final String TABLE_NAME = "taLog";
-        public static final String ID = "logId";
+        public static final String TABLE_NAME = "Log";
+        public static final String LOG_ID = "logId";
         public static final String LENGTH = "length";
         public static final String DIAMETER = "diameter";
     }

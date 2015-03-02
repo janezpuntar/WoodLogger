@@ -24,10 +24,13 @@ import si.puntar.woodlogger.ui.widget.DividerItemDecoration;
 public class MeasurementActivity extends BaseActivity implements MeasurementView,
         AddMeasurementFragment.OnAddMeasurementFragmentListener {
 
-    @Inject MeasurementPresenter presenter;
+    @Inject
+    MeasurementPresenter presenter;
 
-    @InjectView(R.id.tb_header) Toolbar toolbar;
-    @InjectView(R.id.rv_current_measurements) RecyclerView rvCurrentMeasurements;
+    @InjectView(R.id.tb_header)
+    Toolbar toolbar;
+    @InjectView(R.id.rv_current_measurements)
+    RecyclerView rvCurrentMeasurements;
 
     private AddMeasurementFragment addMeasurementFragment;
     private CurrentMeasurementAdapter adapter;
@@ -35,7 +38,7 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
     @Override
     protected void inject() {
         MeasurementComponent measurementComponent = Dagger_MeasurementComponent.builder()
-                .appComponent(App.get(this).getComponent())
+                .appComponent(App.get(this).getAppComponent())
                 .measurementModule(new MeasurementModule(this)).build();
         measurementComponent.inject(this);
     }
@@ -56,7 +59,7 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
 
         setTitle(R.string.add_measurement_activity_title);
 
-        addMeasurementFragment = (AddMeasurementFragment) getFragmentManager()
+        addMeasurementFragment = (AddMeasurementFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.frag_add_measurement);
 
         addMeasurementFragment.setListener(this);

@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,9 +55,12 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.tv_diameter) TextView tvDiameter;
-        @InjectView(R.id.tv_length) TextView tvLength;
-        @InjectView(R.id.tv_volume) TextView tvVolume;
+        @InjectView(R.id.tv_diameter)
+        TextView tvDiameter;
+        @InjectView(R.id.tv_length)
+        TextView tvLength;
+        @InjectView(R.id.tv_volume)
+        TextView tvVolume;
 
         public ViewHolder(View itemView) {
             super(itemView);

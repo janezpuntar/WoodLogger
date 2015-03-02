@@ -1,5 +1,6 @@
 package si.puntar.woodlogger.data.helper;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -21,7 +22,6 @@ import timber.log.Timber;
 /**
  * Created by Puntar on 2/12/15.
  */
-@Singleton
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "woodlogger.db";
@@ -32,8 +32,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<LogLength, Long> logLengthDao;
 
     @Inject
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Application application) {
+        super(application, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -43,6 +43,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Log.class);
             TableUtils.createTable(connectionSource, Order.class);
             TableUtils.createTable(connectionSource, LogLength.class);
+
+            getLogLengthDao().create(new LogLength(4));
+            getLogLengthDao().create(new LogLength(5));
+            getLogLengthDao().create(new LogLength(6));
+            getLogLengthDao().create(new LogLength(8));
+            getLogLengthDao().create(new LogLength(10));
+            getLogLengthDao().create(new LogLength(12));
+            getLogLengthDao().create(new LogLength(14));
+            getLogLengthDao().create(new LogLength(16));
+
         } catch (SQLException e) {
             Timber.e("Cannot create db tables.", e);
         }
@@ -53,7 +63,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
-    public Dao<Order, Long> getOrderDao() throws SQLException{
+    public Dao<Order, Long> getOrderDao() throws SQLException {
         if (orderDao == null) {
             orderDao = getDao(Order.class);
         }

@@ -1,17 +1,24 @@
 package si.puntar.woodlogger.data.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * Created by Puntar on 2/12/15.
  */
+@DatabaseTable(tableName = LogLength.NameHelper.TABLE_NAME)
 public class LogLength {
 
+    @DatabaseField(generatedId = true, columnName = NameHelper.LOG_LENGTH_ID)
     private long logLengthId;
+
+    @DatabaseField(columnName = NameHelper.LOG_LENGTH)
     private double logLength;
 
-    public LogLength() { }
+    public LogLength() {
+    }
 
-    public LogLength(long logLengthId, float logLength) {
-        this.logLengthId = logLengthId;
+    public LogLength(float logLength) {
         this.logLength = logLength;
     }
 
@@ -19,7 +26,13 @@ public class LogLength {
         return logLengthId;
     }
 
-    public double getLogLength() {
+    public double getLength() {
         return logLength;
+    }
+
+    public static class NameHelper {
+        public static final String TABLE_NAME = "logLengths";
+        public static final String LOG_LENGTH_ID = "logLengthId";
+        public static final String LOG_LENGTH = "logLength";
     }
 }

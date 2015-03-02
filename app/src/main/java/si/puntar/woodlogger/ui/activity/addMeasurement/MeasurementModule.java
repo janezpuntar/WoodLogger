@@ -1,7 +1,5 @@
 package si.puntar.woodlogger.ui.activity.addMeasurement;
 
-import javax.inject.Inject;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,11 +15,13 @@ public class MeasurementModule {
         this.view = view;
     }
 
-    @Provides MeasurementView provideView() {
+    @Provides
+    MeasurementView provideView() {
         return view;
     }
 
-    @Provides MeasurementPresenter providePresenter(MeasurementView view) {
+    @Provides
+    MeasurementPresenter providePresenter(MeasurementView view) {
         return new MeasurementPresenterImpl(view);
     }
 }

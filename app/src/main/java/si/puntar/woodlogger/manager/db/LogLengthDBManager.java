@@ -9,13 +9,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import si.puntar.woodlogger.data.helper.DatabaseHelper;
-import si.puntar.woodlogger.data.model.Log;
 import si.puntar.woodlogger.data.model.LogLength;
 
 /**
  * Created by Puntar on 2/12/15.
  */
-@Singleton
 public class LogLengthDBManager {
 
     private final DatabaseHelper databaseHelper;
@@ -29,5 +27,4 @@ public class LogLengthDBManager {
         Dao<LogLength, Long> logLengthDao = databaseHelper.getLogLengthDao();
         return logLengthDao.queryForAll();
     }
-
 }

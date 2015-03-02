@@ -13,7 +13,7 @@ import timber.log.Timber;
  */
 public class App extends Application {
 
-    private AppComponent component;
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
@@ -29,15 +29,15 @@ public class App extends Application {
     }
 
     public void buildComponentAndInject() {
-        component = Dagger_AppComponent.builder()
+        appComponent = Dagger_AppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
 
-        component.inject(this);
+        appComponent.inject(this);
     }
 
-    public AppComponent getComponent() {
-        return component;
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
     public static App get(Context context) {

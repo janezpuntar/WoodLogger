@@ -2,13 +2,11 @@ package si.puntar.woodlogger.ui.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import javax.inject.Inject;
 
@@ -16,10 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.app.App;
-import si.puntar.woodlogger.ui.activity.addMeasurement.MeasurementActivity;
 import si.puntar.woodlogger.ui.activity.base.BaseActivity;
-import si.puntar.woodlogger.ui.fragment.addMeasurement.AddMeasurementFragment;
-import timber.log.Timber;
 
 
 public class MainActivity extends BaseActivity implements MainView {
@@ -27,13 +22,15 @@ public class MainActivity extends BaseActivity implements MainView {
     @Inject MainPresenter presenter;
 
     @InjectView(R.id.tb_header) Toolbar toolbar;
-    @InjectView(R.id.rv_previous_measurements) RecyclerView rvPreviousMeasurement;
+
+    @InjectView(R.id.rv_previous_measurements)
+    RecyclerView rvPreviousMeasurement;
 
     @Override
     protected void inject() {
         MainComponent mainComponent = Dagger_MainComponent.builder()
                 .appComponent(App.get(this)
-                .getComponent())
+                        .getAppComponent())
                 .mainModule(new MainModule(this)).build();
         mainComponent.inject(this);
     }
@@ -65,8 +62,9 @@ public class MainActivity extends BaseActivity implements MainView {
 
         switch (item.getItemId()) {
             case R.id.menu_add_measurement:
-                Intent addMeasureActivity = new Intent(this, MeasurementActivity.class);
-                startActivity(addMeasureActivity);
+                presenter.neki();
+//                Intent addMeasureActivity = new Intent(this, MeasurementActivity.class);
+//                startActivity(addMeasureActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
