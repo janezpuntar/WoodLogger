@@ -2,6 +2,7 @@ package si.puntar.woodlogger.ui.fragment.addMeasurement;
 
 import javax.inject.Inject;
 
+import si.puntar.woodlogger.data.model.Log;
 import si.puntar.woodlogger.data.model.LogLength;
 
 /**
@@ -20,7 +21,7 @@ public class AddMeasurementPresenterImpl implements AddMeasurementPresenter {
 
     @Override
     public void verifyData(String diameter) {
-//        view.publishLog(new Log( selectedLength, Double.parseDouble(diameter)));
+        view.publishLog(new Log(selectedLength, Double.parseDouble(diameter)));
     }
 
     @Override

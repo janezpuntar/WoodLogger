@@ -15,13 +15,10 @@ import si.puntar.woodlogger.manager.rx.OrderManager;
 /**
  * Created by Puntar on 2/25/15.
  */
-@Module
+@Module(
+        includes = DataModule.class
+)
 public class ManagerModule {
-
-    @Provides
-    DatabaseHelper provideDatabaseHelper(Application application) {
-        return new DatabaseHelper(application);
-    }
 
     @Provides
     LogDBManager provideLogDBManager(DatabaseHelper helper) {

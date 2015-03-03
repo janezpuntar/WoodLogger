@@ -4,7 +4,6 @@ import android.net.ConnectivityManager;
 
 import dagger.Module;
 import dagger.Provides;
-import si.puntar.woodlogger.manager.NekClass;
 import si.puntar.woodlogger.manager.rx.OrderManager;
 
 /**
@@ -25,7 +24,7 @@ public class MainModule {
     }
 
     @Provides
-    MainPresenter providePresenter(MainView view, ConnectivityManager nekClass) {
-        return new MainPresenterImpl(view, nekClass);
+    MainPresenter providePresenter(MainView view, OrderManager orderManager) {
+        return new MainPresenterImpl(view, orderManager);
     }
 }

@@ -5,5 +5,4 @@ package si.puntar.woodlogger.ui.activity.main;
  */
 public interface MainPresenter {
 
-    void neki();
 }

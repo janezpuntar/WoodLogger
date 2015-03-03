@@ -22,6 +22,7 @@ import timber.log.Timber;
 /**
  * Created by Puntar on 2/12/15.
  */
+@Singleton
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "woodlogger.db";
@@ -32,12 +33,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<LogLength, Long> logLengthDao;
 
     @Inject
-    public DatabaseHelper(Application application) {
-        super(application, DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+    public void onCreate(SQLiteDatabase database,
+                         ConnectionSource connectionSource) {
         try {
 
             TableUtils.createTable(connectionSource, Log.class);
@@ -53,7 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             getLogLengthDao().create(new LogLength(14));
             getLogLengthDao().create(new LogLength(16));
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Timber.e("Cannot create db tables.", e);
         }
     }

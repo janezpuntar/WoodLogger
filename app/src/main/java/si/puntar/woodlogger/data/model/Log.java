@@ -16,7 +16,7 @@ public class Log {
             columnName = NameHelper.LENGTH)
     private LogLength logLength;
 
-    @DatabaseField(generatedId = true, columnName = NameHelper.DIAMETER)
+    @DatabaseField(columnName = NameHelper.DIAMETER)
     private double diameter;
 
     public Log() {

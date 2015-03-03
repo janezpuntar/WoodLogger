@@ -1,8 +1,10 @@
 package si.puntar.woodlogger.ui.fragment.addMeasurement;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import si.puntar.woodlogger.app.App;
 import si.puntar.woodlogger.data.model.Log;
 import si.puntar.woodlogger.data.model.LogLength;
 //import si.puntar.woodlogger.ui.dialog.logLenght.LogLengthDialog;
+import si.puntar.woodlogger.ui.dialog.logLenght.LogLengthDialog;
 import si.puntar.woodlogger.ui.fragment.baseFragment.BaseFragment;
 
 /**
@@ -29,6 +32,9 @@ public class AddMeasurementFragment extends BaseFragment implements
 
     @Inject
     AddMeasurementPresenter presenter;
+
+    @Inject
+    InputMethodManager inputMethodManager;
 
     @InjectView(R.id.btn_change_length)
     Button btnChangeLength;
@@ -63,6 +69,24 @@ public class AddMeasurementFragment extends BaseFragment implements
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        inputMethodManager.showSoftInput(etLogDiameter, InputMethodManager.SHOW_FORCED);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        inputMethodManager.hideSoftInputFromWindow(etLogDiameter.getWindowToken(), 0);
+    }
+
+    @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
         switch (v.getId()) {
@@ -78,10 +102,9 @@ public class AddMeasurementFragment extends BaseFragment implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_change_length:
-//                LogLengthDialog dialog = LogLengthDialog.newInstance();
-//                dialog.setTargetFragment(this, LOG_LENGTH_DIALOG_RQ);
-//                dialog.show(getFragmentManager(), LogLengthDialog.TAG);
-
+                LogLengthDialog dialog = LogLengthDialog.newInstance();
+                dialog.setTargetFragment(this, LOG_LENGTH_DIALOG_RQ);
+                dialog.show(getFragmentManager(), LogLengthDialog.TAG);
                 break;
             case R.id.btn_save_data:
                 presenter.verifyData(etLogDiameter.getText().toString());

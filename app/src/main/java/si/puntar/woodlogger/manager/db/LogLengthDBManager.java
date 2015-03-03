@@ -25,6 +25,7 @@ public class LogLengthDBManager {
 
     public List<LogLength> getLogLengths() throws SQLException {
         Dao<LogLength, Long> logLengthDao = databaseHelper.getLogLengthDao();
+
         return logLengthDao.queryForAll();
     }
 }

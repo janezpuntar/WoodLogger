@@ -8,7 +8,6 @@ import android.widget.Toast;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import si.puntar.woodlogger.manager.NekClass;
 import si.puntar.woodlogger.manager.rx.OrderManager;
 
 /**
@@ -20,12 +19,8 @@ public class MainPresenterImpl implements MainPresenter {
     private final MainView view;
 
     @Inject
-    public MainPresenterImpl(MainView view, ConnectivityManager nekClass) {
+    public MainPresenterImpl(MainView view, OrderManager orderManager) {
         this.view = view;
     }
 
-    @Override
-    public void neki() {
-        Log.e("fdsa", "dsdsdssd");
-    }
 }

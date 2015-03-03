@@ -1,5 +1,9 @@
 package si.puntar.woodlogger.app;
 
+import android.view.inputmethod.InputMethodManager;
+
+import si.puntar.woodlogger.manager.rx.LogLengthManager;
+import si.puntar.woodlogger.manager.rx.OrderManager;
 import si.puntar.woodlogger.ui.activity.base.AppContainer;
 
 /**
@@ -8,6 +12,9 @@ import si.puntar.woodlogger.ui.activity.base.AppContainer;
 public interface AppGraph {
 
     void inject(App app);
-
     AppContainer appContainer();
+    InputMethodManager getInputMethodManager();
+    OrderManager getOrderManager();
+    LogLengthManager getLogLengthManager();
+
 }

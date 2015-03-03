@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.app.App;
+import si.puntar.woodlogger.ui.activity.addMeasurement.MeasurementActivity;
 import si.puntar.woodlogger.ui.activity.base.BaseActivity;
 
 
@@ -62,9 +63,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
         switch (item.getItemId()) {
             case R.id.menu_add_measurement:
-                presenter.neki();
-//                Intent addMeasureActivity = new Intent(this, MeasurementActivity.class);
-//                startActivity(addMeasureActivity);
+                Intent addMeasureActivity = new Intent(this, MeasurementActivity.class);
+                startActivity(addMeasureActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

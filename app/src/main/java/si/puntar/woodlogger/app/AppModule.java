@@ -16,6 +16,7 @@ import si.puntar.woodlogger.manager.SystemServicesModule;
  */
 @Module(
         includes = {
+                ManagerModule.class,
                 SystemServicesModule.class
         }
 )

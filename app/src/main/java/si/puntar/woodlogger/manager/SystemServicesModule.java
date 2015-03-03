@@ -3,8 +3,11 @@ package si.puntar.woodlogger.manager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
+import android.view.inputmethod.InputMethodManager;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -20,12 +23,15 @@ public class SystemServicesModule {
     }
 
     @Provides
-    ConnectivityManager provideConnectivityManager(Context application) {
-        return (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
+    LocationManager provideLocationManager(Context context) {
+        return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
-//    @Provides
-//    NekClass provideDouble() {
-//        return new NekClass(32);
-//    }
+    @Provides
+    InputMethodManager proInputMethodManager(Context context) {
+        return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    }
+
+
+
 }
