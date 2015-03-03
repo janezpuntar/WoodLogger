@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import java.util.List;
@@ -18,12 +19,14 @@ import si.puntar.woodlogger.app.App;
 import si.puntar.woodlogger.data.model.LogLength;
 import si.puntar.woodlogger.ui.ViewFunctions;
 import si.puntar.woodlogger.ui.dialog.baseDialog.BaseDialog;
+import si.puntar.woodlogger.ui.dialog.logLenght.StoredLengthAdapter.OnItemClickListener;
+import si.puntar.woodlogger.ui.fragment.addMeasurement.AddMeasurementFragment;
 
 /**
  * Created by Puntar on 2/23/15.
  */
 public class LogLengthDialog extends BaseDialog
-        implements LogLengthDialogView {
+        implements LogLengthDialogView, OnItemClickListener {
 
     public static final String TAG = LogLengthDialog.class.getSimpleName();
 
@@ -39,6 +42,8 @@ public class LogLengthDialog extends BaseDialog
     RecyclerView rvStoredLengths;
 
     private StoredLengthAdapter adapter;
+
+    private OnItemClickListener logLengthItemClick;
 
     @Override
     protected void inject() {
@@ -61,6 +66,7 @@ public class LogLengthDialog extends BaseDialog
         rvStoredLengths.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new StoredLengthAdapter(getActivity());
         rvStoredLengths.setAdapter(adapter);
+        adapter.setItemClickListener(this);
     }
 
     @Override
@@ -75,6 +81,10 @@ public class LogLengthDialog extends BaseDialog
         presenter.onPause();
     }
 
+    public void setLogLengthItemClick(OnItemClickListener logLengthItemClick) {
+        this.logLengthItemClick = logLengthItemClick;
+    }
+
     @Override
     public void setData(List<LogLength> data) {
         adapter.addAll(data);
@@ -83,5 +93,10 @@ public class LogLengthDialog extends BaseDialog
     @Override
     public void showAlert(@StringRes int stringId) {
         Toast.makeText(getActivity(), stringId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void onItemClick(LogLength entity) {
+        logLengthItemClick.onItemClick(entity);
+        dismiss();
     }
 }

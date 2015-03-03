@@ -11,4 +11,6 @@ public interface AddMeasurementPresenter {
 
     void setCurrentLogLength(LogLength logLength);
 
+    void onResume();
+
 }

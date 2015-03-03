@@ -22,7 +22,6 @@ import timber.log.Timber;
 /**
  * Created by Puntar on 2/12/15.
  */
-@Singleton
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "woodlogger.db";
@@ -41,22 +40,25 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database,
                          ConnectionSource connectionSource) {
         try {
-
+            TableUtils.createTable(connectionSource, LogLength.class);
             TableUtils.createTable(connectionSource, Log.class);
             TableUtils.createTable(connectionSource, Order.class);
-            TableUtils.createTable(connectionSource, LogLength.class);
-
-            getLogLengthDao().create(new LogLength(4));
-            getLogLengthDao().create(new LogLength(5));
-            getLogLengthDao().create(new LogLength(6));
-            getLogLengthDao().create(new LogLength(8));
-            getLogLengthDao().create(new LogLength(10));
-            getLogLengthDao().create(new LogLength(12));
-            getLogLengthDao().create(new LogLength(14));
-            getLogLengthDao().create(new LogLength(16));
-
         } catch (Exception e) {
             Timber.e("Cannot create db tables.", e);
+        }
+
+        try {
+            Dao<LogLength, Long> logLengthDao = getLogLengthDao();
+            logLengthDao.create(new LogLength(4));
+            logLengthDao.create(new LogLength(5));
+            logLengthDao.create(new LogLength(6));
+            logLengthDao.create(new LogLength(8));
+            logLengthDao.create(new LogLength(10));
+            logLengthDao.create(new LogLength(12));
+            logLengthDao.create(new LogLength(14));
+            logLengthDao.create(new LogLength(16));
+        } catch (SQLException e) {
+            Timber.e("Cannot add default lengths.", e);
         }
     }
 

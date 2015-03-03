@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import si.puntar.woodlogger.data.helper.DatabaseHelper;
@@ -15,7 +17,7 @@ import si.puntar.woodlogger.data.helper.DatabaseHelper;
 @Module
 public class DataModule {
 
-    @Provides
+    @Provides @Singleton
     DatabaseHelper provideDatabaseHelper(Context context) {
         return OpenHelperManager.getHelper(context, DatabaseHelper.class);
     }

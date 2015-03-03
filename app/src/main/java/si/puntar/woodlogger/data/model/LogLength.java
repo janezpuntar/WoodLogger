@@ -31,7 +31,7 @@ public class LogLength {
     }
 
     public static class NameHelper {
-        public static final String TABLE_NAME = "logLengths";
+        public static final String TABLE_NAME = "LogLength";
         public static final String LOG_LENGTH_ID = "logLengthId";
         public static final String LOG_LENGTH = "logLength";
     }

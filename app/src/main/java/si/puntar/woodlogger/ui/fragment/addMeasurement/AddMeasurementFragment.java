@@ -18,6 +18,7 @@ import si.puntar.woodlogger.data.model.Log;
 import si.puntar.woodlogger.data.model.LogLength;
 //import si.puntar.woodlogger.ui.dialog.logLenght.LogLengthDialog;
 import si.puntar.woodlogger.ui.dialog.logLenght.LogLengthDialog;
+import si.puntar.woodlogger.ui.dialog.logLenght.StoredLengthAdapter.OnItemClickListener;
 import si.puntar.woodlogger.ui.fragment.baseFragment.BaseFragment;
 
 /**
@@ -26,7 +27,7 @@ import si.puntar.woodlogger.ui.fragment.baseFragment.BaseFragment;
 public class AddMeasurementFragment extends BaseFragment implements
         AddMeasurementView,
         EditText.OnEditorActionListener,
-        View.OnClickListener, DialogChooseOptionCallback {
+        View.OnClickListener, DialogChooseOptionCallback, OnItemClickListener {
 
     private static final int LOG_LENGTH_DIALOG_RQ = 2333;
 
@@ -71,18 +72,27 @@ public class AddMeasurementFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        showKeyBoard();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        inputMethodManager.showSoftInput(etLogDiameter, InputMethodManager.SHOW_FORCED);
+        presenter.onResume();
+        showKeyBoard();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        hideKeyBoard();
+    }
+
+    private void showKeyBoard() {
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private void hideKeyBoard() {
         inputMethodManager.hideSoftInputFromWindow(etLogDiameter.getWindowToken(), 0);
     }
 
@@ -102,9 +112,13 @@ public class AddMeasurementFragment extends BaseFragment implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_change_length:
+                hideKeyBoard();
+
                 LogLengthDialog dialog = LogLengthDialog.newInstance();
                 dialog.setTargetFragment(this, LOG_LENGTH_DIALOG_RQ);
+                dialog.setLogLengthItemClick(this);
                 dialog.show(getFragmentManager(), LogLengthDialog.TAG);
+
                 break;
             case R.id.btn_save_data:
                 presenter.verifyData(etLogDiameter.getText().toString());
@@ -121,9 +135,20 @@ public class AddMeasurementFragment extends BaseFragment implements
         listener.saveMeasurement(log);
     }
 
+    @Override public void changeSelectedLogLength(LogLength data) {
+        btnChangeLength.setText(getString(R.string.unit, data.getLength()));
+        presenter.setCurrentLogLength(data);
+    }
+
     @Override
     public void selectedOption(LogLength logLength) {
         presenter.setCurrentLogLength(logLength);
+    }
+
+    @Override public void onItemClick(LogLength entity) {
+
+        changeSelectedLogLength(entity);
+        showKeyBoard();
     }
 
     public interface OnAddMeasurementFragmentListener {

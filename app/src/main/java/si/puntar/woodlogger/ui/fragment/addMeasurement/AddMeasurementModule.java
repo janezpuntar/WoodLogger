@@ -2,6 +2,7 @@ package si.puntar.woodlogger.ui.fragment.addMeasurement;
 
 import dagger.Module;
 import dagger.Provides;
+import si.puntar.woodlogger.manager.rx.LogLengthManager;
 
 /**
  * Created by Puntar on 2/19/15.
@@ -21,7 +22,7 @@ public class AddMeasurementModule {
     }
 
     @Provides
-    AddMeasurementPresenter providePresenter(AddMeasurementView view) {
-        return new AddMeasurementPresenterImpl(view);
+    AddMeasurementPresenter providePresenter(AddMeasurementView view, LogLengthManager logLengthManager) {
+        return new AddMeasurementPresenterImpl(view, logLengthManager);
     }
 }

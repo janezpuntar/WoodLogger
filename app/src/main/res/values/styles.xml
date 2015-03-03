@@ -10,6 +10,21 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <style name="BlackText" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="BlackText.Small">
+        <item name="android:textSize">@dimen/small_text</item>
+    </style>
+
+    <style name="BlackText.Medium">
+        <item name="android:textSize">@dimen/medium_text</item>
+    </style>
+
+    <style name="BlackText.Large">
+        <item name="android:textSize">@dimen/large_text</item>
+    </style>
 
 
 </resources>

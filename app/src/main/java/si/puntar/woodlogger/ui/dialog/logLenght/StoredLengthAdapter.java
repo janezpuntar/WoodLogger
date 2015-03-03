@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -20,13 +21,15 @@ import si.puntar.woodlogger.data.model.LogLength;
  */
 public class StoredLengthAdapter extends RecyclerView.Adapter<StoredLengthAdapter.ViewHolder> {
 
+    private Context context;
     private List<LogLength> logLengths;
     private LayoutInflater inflater;
+    private OnItemClickListener itemClickListener;
 
     public StoredLengthAdapter(Context context) {
+        this.context = context;
         this.logLengths = new ArrayList<>();
         inflater = LayoutInflater.from(context);
-
     }
 
     @Override
@@ -37,8 +40,7 @@ public class StoredLengthAdapter extends RecyclerView.Adapter<StoredLengthAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        LogLength logLength = logLengths.get(position);
-        holder.tvLogLength.setText(String.valueOf(logLength.getLength()));
+        holder.bind(logLengths.get(position));
     }
 
     @Override
@@ -51,7 +53,13 @@ public class StoredLengthAdapter extends RecyclerView.Adapter<StoredLengthAdapte
         notifyDataSetChanged();
     }
 
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private LogLength logLength;
 
         @InjectView(R.id.tv_log_length)
         TextView tvLogLength;
@@ -59,6 +67,21 @@ public class StoredLengthAdapter extends RecyclerView.Adapter<StoredLengthAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
+
+            itemView.setOnClickListener(new OnClickListener() {
+                @Override public void onClick(View v) {
+                    itemClickListener.onItemClick(logLength);
+                }
+            });
         }
+
+        public void bind(LogLength logLength) {
+            this.logLength = logLength;
+            tvLogLength.setText(context.getString(R.string.unit, logLength.getLength()));
+        }
+    }
+
+    public static interface OnItemClickListener {
+        public void onItemClick(LogLength entity);
     }
 }
