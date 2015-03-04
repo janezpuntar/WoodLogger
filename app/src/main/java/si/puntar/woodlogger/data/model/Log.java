@@ -3,6 +3,8 @@ package si.puntar.woodlogger.data.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 /**
  * Created by Puntar on 2/12/15.
  */
@@ -19,12 +21,16 @@ public class Log {
     @DatabaseField(columnName = NameHelper.DIAMETER)
     private double diameter;
 
+    @DatabaseField(columnName = NameHelper.DATE_INSERTED)
+    private Date dateInserted;
+
     public Log() {
     }
 
     public Log(LogLength length, double diameter) {
         this.logLength = length;
         this.diameter = diameter;
+        this.dateInserted = new Date(System.currentTimeMillis());
     }
 
     public double getLength() {
@@ -36,7 +42,7 @@ public class Log {
     }
 
     public double getVolume() {
-        return Math.PI * Math.pow((diameter / 2), 2) * logLength.getLength();
+        return Math.PI * Math.pow((diameter / 200), 2) * logLength.getLength();
     }
 
     public static class NameHelper {
@@ -44,5 +50,6 @@ public class Log {
         public static final String LOG_ID = "logId";
         public static final String LENGTH = "length";
         public static final String DIAMETER = "diameter";
+        public static final String DATE_INSERTED = "dateInserted";
     }
 }

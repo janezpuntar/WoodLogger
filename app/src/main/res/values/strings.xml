@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Wood Logger</string>
     <string name="unit">%.1f m</string>
+    <string name="unit_volume">%.2f m\u00B3</string>
+    <string name="unit_diameter">%.1f cm</string>
+
 
     <string name="add">Add</string>
+    <string name="save">Save</string>
 
-
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 
     <string name="add_measurement_activity_title">Add</string>
     <string name="edit_measurement_activity_title">Edit</string>
     <string name="log_length_dialog_title">Log length</string>
+    <string name="add_diameter_hint">diameter in cm</string>
+
+    <string name="insert_diameter">Insert diameter in cm.\nThan click add button.</string>
+
+    <string name="add_title">Add title.</string>
+    <string name="add_description">Add description.</string>
+    <string name="add_log_measure">Add log measurement(s).</string>
+
+    <string name="something_went_wrong">Something went wrong.</string>
 
 </resources>

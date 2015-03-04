@@ -36,7 +36,9 @@ public class OrderDBManager {
 
     public List<Order> getOrderList() throws SQLException {
         Dao<Order, Long> orderDao = databaseHelper.getOrderDao();
-        return orderDao.queryBuilder().orderBy(Order.NameHelper.DATE_MEASURED, true).query();
+        return orderDao.queryBuilder()
+                .orderBy(Order.NameHelper.DATE_MEASURED, true)
+                .query();
     }
 
     public Order getOrderById(long orderId) throws SQLException {

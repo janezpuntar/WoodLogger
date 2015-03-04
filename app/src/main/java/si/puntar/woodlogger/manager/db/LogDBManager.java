@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import si.puntar.woodlogger.data.helper.DatabaseHelper;
 import si.puntar.woodlogger.data.model.Log;
+import si.puntar.woodlogger.data.model.Order;
 
 /**
  * Created by Puntar on 2/12/15.

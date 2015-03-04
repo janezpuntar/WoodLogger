@@ -1,9 +1,12 @@
 package si.puntar.woodlogger.ui.fragment.addMeasurement;
 
+import android.text.TextUtils;
+
 import javax.inject.Inject;
 
 import rx.Observer;
 import rx.Subscription;
+import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.data.model.Log;
 import si.puntar.woodlogger.data.model.LogLength;
 import si.puntar.woodlogger.manager.rx.LogLengthManager;
@@ -29,7 +32,11 @@ public class AddMeasurementPresenterImpl implements AddMeasurementPresenter {
 
     @Override
     public void verifyData(String diameter) {
-        view.publishLog(new Log(selectedLength, Double.parseDouble(diameter)));
+        if (!TextUtils.isEmpty(diameter)) {
+            view.publishLog(new Log(selectedLength, Double.parseDouble(diameter)));
+        } else {
+            view.showAlert(R.string.insert_diameter);
+        }
     }
 
     @Override

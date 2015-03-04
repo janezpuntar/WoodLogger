@@ -2,12 +2,14 @@ package si.puntar.woodlogger.ui.fragment.addMeasurement;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -133,6 +135,7 @@ public class AddMeasurementFragment extends BaseFragment implements
     @Override
     public void publishLog(Log log) {
         listener.saveMeasurement(log);
+        etLogDiameter.setText("");
     }
 
     @Override public void changeSelectedLogLength(LogLength data) {
@@ -149,6 +152,11 @@ public class AddMeasurementFragment extends BaseFragment implements
 
         changeSelectedLogLength(entity);
         showKeyBoard();
+    }
+
+    @Override
+    public void showAlert(@StringRes int stringId) {
+        Toast.makeText(getActivity(), stringId, Toast.LENGTH_SHORT).show();
     }
 
     public interface OnAddMeasurementFragmentListener {

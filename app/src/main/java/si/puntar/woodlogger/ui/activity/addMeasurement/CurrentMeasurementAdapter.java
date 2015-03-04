@@ -20,12 +20,14 @@ import si.puntar.woodlogger.data.model.Log;
  */
 public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasurementAdapter.ViewHolder> {
 
+    private Context context;
     private LayoutInflater inflater;
     private List<Log> lstLog;
 
     public CurrentMeasurementAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         lstLog = new ArrayList<>(3);
+        this.context = context;
     }
 
     @Override
@@ -38,9 +40,9 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log log = lstLog.get(position);
 
-        holder.tvLength.setText(String.format("%.00f", log.getLength()));
-        holder.tvDiameter.setText(String.format("%.00f", log.getDiameter()));
-        holder.tvVolume.setText(String.format("%.2f", log.getVolume()));
+        holder.tvLength.setText(context.getString(R.string.unit, log.getLength()));
+        holder.tvDiameter.setText(context.getString(R.string.unit_diameter, log.getDiameter()));
+        holder.tvVolume.setText(context.getString(R.string.unit_volume, log.getVolume()));
     }
 
     @Override
@@ -49,8 +51,12 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
     }
 
     public void addItem(Log log) {
-        lstLog.add(log);
-        notifyDataSetChanged();
+        lstLog.add(0, log);
+        notifyItemInserted(0);
+    }
+
+    public List<Log> getItems() {
+        return lstLog;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

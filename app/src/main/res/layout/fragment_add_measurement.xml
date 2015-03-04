@@ -20,6 +20,7 @@
         android:layout_weight="1"
         android:paddingRight="@dimen/edit_text_padding_right"
         android:paddingEnd="@dimen/edit_text_padding_right"
+        android:hint="@string/add_diameter_hint"
         android:inputType="numberDecimal"
         android:imeOptions="actionDone"
         android:gravity="end"

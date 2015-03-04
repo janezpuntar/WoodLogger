@@ -57,6 +57,18 @@ public class Order {
         return measuredLogs;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public void setMeasuredLogs(List<Log> measuredLogs) {
+        this.measuredLogs = measuredLogs;
+    }
+
     public static class NameHelper {
         public static final String TABLE_NAME = "order";
         public static final String ORDER_ID = "orderId";
