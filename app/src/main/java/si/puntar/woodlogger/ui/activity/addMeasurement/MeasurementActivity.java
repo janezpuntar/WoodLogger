@@ -115,6 +115,7 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
     @Override
     public void saveMeasurement(Log log) {
         adapter.addItem(log);
+        rvCurrentMeasurements.smoothScrollToPosition(0);
     }
 
     @Override

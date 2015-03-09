@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.Observer;
@@ -42,6 +41,15 @@ public class OrderManager {
         orderOperation = new HashMap<>();
     }
 
+    public void assignEmptyCollection(Order order) {
+
+        try {
+            orderDBManager.assignEmptyCollection(order);
+        } catch (SQLException e) {
+            Timber.e("Cannot assign empty collection", e);
+        }
+    }
+
     public Subscription getOrders(Observer<List<Order>> observer) {
 
         if (getOrders != null) {
@@ -63,6 +71,8 @@ public class OrderManager {
             public void call(Subscriber<? super List<Order>> subscriber) {
 
                 try {
+
+
                     subscriber.onNext(orderDBManager.getOrderList());
                     subscriber.onCompleted();
                 } catch (SQLException e) {
@@ -133,45 +143,56 @@ public class OrderManager {
         });
 
         Observable.create(new Observable.OnSubscribe<Order>() {
-            @Override
-            public void call(Subscriber<? super Order> subscriber) {
+                              @Override
+                              public void call(Subscriber<? super Order> subscriber) {
 
-                try {
+                                  try {
 
-                    EmptyFieldsException exception = new EmptyFieldsException();
+                                      EmptyFieldsException exception = new EmptyFieldsException();
 
-                    if (TextUtils.isEmpty(order.getTitle())) {
-                        exception.addStringMessage(R.string.add_title);
-                    }
+                                      if (TextUtils.isEmpty(order.getTitle())) {
+                                          exception.addStringMessage(R.string.add_title);
+                                      }
 
-                    if (TextUtils.isEmpty(order.getDetails())) {
-                        exception.addStringMessage(R.string.add_description);
-                    }
+                                      if (TextUtils.isEmpty(order.getDetails())) {
+                                          exception.addStringMessage(R.string.add_description);
+                                      }
 
-                    if (order.getMeasuredLogs().size() == 0) {
-                        exception.addStringMessage(R.string.add_log_measure);
-                    }
+                                      if (order.getMeasuredLogs().size() == 0) {
+                                          exception.addStringMessage(R.string.add_log_measure);
+                                      }
 
-                    if (exception.isException()) {
-                        subscriber.onError(exception);
-                    }
+                                      if (exception.isException()) {
+                                          subscriber.onError(exception);
+                                      }
 
+                                      Dao.CreateOrUpdateStatus status = orderDBManager.createUpdateOrder(order);
 
-                    Dao.CreateOrUpdateStatus status = orderDBManager.createUpdateOrder(order);
+                                      if (status.getNumLinesChanged() > 0) {
+                                          subscriber.onNext(order);
+                                      }
+                                      subscriber.onCompleted();
 
-                    if (status.getNumLinesChanged() > 0) {
-                        subscriber.onNext(order);
-                    }
-                    subscriber.onCompleted();
+                                  } catch (SQLException e) {
+                                      subscriber.onError(e);
+                                      Timber.e("Cannot save order - saveOrder()", e);
+                                  }
+                              }
+                          }
 
-                } catch (SQLException e) {
-                    subscriber.onError(e);
-                    Timber.e("Cannot save order - saveOrder()", e);
-                }
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(orderPublishSubject);
+        ).
+
+                subscribeOn(Schedulers.io()
+
+                )
+                .
+
+                        observeOn(AndroidSchedulers.mainThread()
+
+                        )
+                .
+
+                        subscribe(orderPublishSubject);
 
         return subscription;
     }

@@ -41,14 +41,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                          ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, LogLength.class);
-            TableUtils.createTable(connectionSource, Log.class);
             TableUtils.createTable(connectionSource, Order.class);
+            TableUtils.createTable(connectionSource, Log.class);
         } catch (Exception e) {
             Timber.e("Cannot create db tables.", e);
         }
 
         try {
             Dao<LogLength, Long> logLengthDao = getLogLengthDao();
+
             logLengthDao.create(new LogLength(4));
             logLengthDao.create(new LogLength(5));
             logLengthDao.create(new LogLength(6));
@@ -63,8 +64,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-
+    public void onUpgrade(SQLiteDatabase database,
+                          ConnectionSource connectionSource,
+                          int oldVersion, int newVersion) {
     }
 
     public Dao<Order, Long> getOrderDao() throws SQLException {

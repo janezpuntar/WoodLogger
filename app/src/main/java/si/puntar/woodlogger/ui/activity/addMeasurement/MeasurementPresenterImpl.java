@@ -1,5 +1,6 @@
 package si.puntar.woodlogger.ui.activity.addMeasurement;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
         this.view = view;
         this.orderManager = orderManager;
         order = new Order();
+        orderManager.assignEmptyCollection(order);
     }
 
     @Override
@@ -36,6 +38,7 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
         order.setTitle(title);
         order.setDetails(description);
         order.setMeasuredLogs(data);
+        order.setDateMeasured(new Date(System.currentTimeMillis()));
 
         if (saveOrder != null) {
             saveOrder.unsubscribe();
@@ -52,6 +55,7 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
                 if (e instanceof EmptyFieldsException) {
                     view.showMultipleAlerts(((EmptyFieldsException) e).getStringRes());
                 } else {
+                    android.util.Log.e("fdas", "nk " + e.getMessage(), e);
                     view.showAlert(R.string.something_went_wrong);
                 }
             }

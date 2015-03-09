@@ -8,12 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.app.App;
+import si.puntar.woodlogger.data.model.Order;
 import si.puntar.woodlogger.ui.activity.addMeasurement.MeasurementActivity;
 import si.puntar.woodlogger.ui.activity.base.BaseActivity;
 
@@ -26,6 +29,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @InjectView(R.id.rv_previous_measurements)
     RecyclerView rvPreviousMeasurement;
+
+    private OrderAdapter adapter;
 
     @Override
     protected void inject() {
@@ -48,7 +53,21 @@ public class MainActivity extends BaseActivity implements MainView {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
 
+        adapter = new OrderAdapter(this);
         rvPreviousMeasurement.setLayoutManager(new LinearLayoutManager(this));
+        rvPreviousMeasurement.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.onPause();
 
     }
 
@@ -69,5 +88,10 @@ public class MainActivity extends BaseActivity implements MainView {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void addOrders(List<Order> item) {
+        adapter.addItem(item);
     }
 }

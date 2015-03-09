@@ -1,6 +1,7 @@
 package si.puntar.woodlogger.data.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
