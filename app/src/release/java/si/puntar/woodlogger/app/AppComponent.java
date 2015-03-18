@@ -13,9 +13,8 @@ import si.puntar.woodlogger.ui.activity.main.MainActivity;
  * Created by Puntar on 2/25/15.
  */
 @Singleton
-@Component(modules = {AppModule.class,
-        ManagerModule.class,
-        SystemServicesModule.class,
+@Component(modules = {
+        AppModule.class,
         ReleaseUiModule.class}
 )
 public interface AppComponent extends AppGraph {

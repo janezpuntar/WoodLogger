@@ -24,4 +24,17 @@
 
     <string name="something_went_wrong">Something went wrong.</string>
 
+    <string name="order_removed">Order removed.</string>
+    <string name="log_removed">Log removed.</string>
+
+    <string name="remove_questionmark">Remove?</string>
+    <string name="order_will_be_removed">Order will be removed.</string>
+    <string name="log_will_be_removed">Log will be removed.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="empty_list_solution">Click on \u0022ADD\u0022 to\nadd new order.</string>
+    <string name="save_questionmark">Save?</string>
+    <string name="save_before_exit">Do you want to save before exit?</string>
+
 </resources>

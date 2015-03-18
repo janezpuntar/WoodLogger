@@ -40,12 +40,11 @@ public class Order {
     private Date dateMeasured;
 
     @ForeignCollectionField(eager = true,
-
             columnName = NameHelper.MEASURED_LOGS)
-    private ForeignCollection<Log> measuredLogs;
+    private Collection<Log> measuredLogs;
 
     public Order() {
-
+        measuredLogs = new ArrayList<>();
     }
 
     public long getOrderId() {
@@ -68,11 +67,7 @@ public class Order {
         this.details = details;
     }
 
-    public void setMeasuredLogs(List<Log> measuredLog) {
-        measuredLogs.addAll(measuredLog);
-    }
-
-    public ForeignCollection<Log> getMeasuredLogs() {
+    public Collection<Log> getMeasuredLogs() {
         return measuredLogs;
     }
 
@@ -87,20 +82,25 @@ public class Order {
     public double getTotalVolume() {
 
         double sum = 0;
-
-        CloseableIterator<Log> iterator = measuredLogs.closeableIterator();
-        try {
-            while (iterator.hasNext()) {
-                Log item = iterator.next();
+        if (measuredLogs != null) {
+            for (Log item : measuredLogs) {
                 sum += item.getVolume();
             }
-        } finally {
-            try {
-                iterator.close();
-            } catch (SQLException e) {
-                Timber.e("");
-            }
         }
+
+//        CloseableIterator<Log> iterator = measuredLogs.closeableIterator();
+//        try {
+//            while (iterator.hasNext()) {
+//                Log item = iterator.next();
+//                sum += item.getVolume();
+//            }
+//        } finally {
+//            try {
+//                iterator.close();
+//            } catch (SQLException e) {
+//                Timber.e("");
+//            }
+//        }
 
         return sum;
     }

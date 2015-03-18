@@ -1,5 +1,7 @@
 package si.puntar.woodlogger.ui.activity.addMeasurement;
 
+import android.os.Bundle;
+
 import java.util.List;
 
 import si.puntar.woodlogger.data.model.Log;
@@ -9,7 +11,13 @@ import si.puntar.woodlogger.data.model.Log;
  */
 public interface MeasurementPresenter {
 
+    void onCreate(Bundle args);
+
     void saveMeasurement(String title, String description, List<Log> data);
 
     void onPause();
+
+    void onResume();
+
+    void removeLog(long logId);
 }

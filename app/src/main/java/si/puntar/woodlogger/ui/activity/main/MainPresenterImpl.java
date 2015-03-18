@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import rx.Observer;
 import rx.Subscription;
+import si.puntar.woodlogger.data.EndObserver;
 import si.puntar.woodlogger.data.model.Order;
 import si.puntar.woodlogger.manager.rx.OrderManager;
 
@@ -25,6 +26,7 @@ public class MainPresenterImpl implements MainPresenter {
     private final OrderManager orderManager;
 
     private Subscription subAllOrders;
+    private Subscription subRemoveOrder;
 
 
 
@@ -42,6 +44,7 @@ public class MainPresenterImpl implements MainPresenter {
         }
 
         subAllOrders = orderManager.getOrders(new Observer<List<Order>>() {
+
             @Override
             public void onCompleted() {
 
@@ -55,6 +58,12 @@ public class MainPresenterImpl implements MainPresenter {
             @Override
             public void onNext(List<Order> orders) {
                 view.addOrders(orders);
+
+                if (orders.size() == 0) {
+                    view.setEmptyOrderListHint(true);
+                } else {
+                    view.setEmptyOrderListHint(false);
+                }
             }
         });
     }
@@ -64,5 +73,33 @@ public class MainPresenterImpl implements MainPresenter {
         if (subAllOrders != null) {
             subAllOrders.unsubscribe();
         }
+
+        if (subRemoveOrder != null) {
+            subRemoveOrder.unsubscribe();
+        }
+    }
+
+    @Override
+    public void removeOrder(long orderId) {
+        if (subRemoveOrder != null) {
+            subRemoveOrder.unsubscribe();
+        }
+
+        subRemoveOrder = orderManager.removeOrder(new Observer<Order>() {
+            @Override
+            public void onCompleted() {
+                view.orderRemoved();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Order order) {
+
+            }
+        }, orderId);
     }
 }

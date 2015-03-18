@@ -10,6 +10,7 @@ import si.puntar.woodlogger.manager.db.LogDBManager;
 import si.puntar.woodlogger.manager.db.LogLengthDBManager;
 import si.puntar.woodlogger.manager.db.OrderDBManager;
 import si.puntar.woodlogger.manager.rx.LogLengthManager;
+import si.puntar.woodlogger.manager.rx.LogManager;
 import si.puntar.woodlogger.manager.rx.OrderManager;
 
 /**
@@ -41,7 +42,12 @@ public class ManagerModule {
     }
 
     @Provides
-    OrderManager provideOrderManager(OrderDBManager orderDBManager) {
-        return new OrderManager(orderDBManager);
+    LogManager provideLogManager(LogDBManager logDBManager) {
+        return new LogManager(logDBManager);
+    }
+
+    @Provides
+    OrderManager provideOrderManager(OrderDBManager orderDBManager, LogDBManager logDBManager) {
+        return new OrderManager(orderDBManager, logDBManager);
     }
 }

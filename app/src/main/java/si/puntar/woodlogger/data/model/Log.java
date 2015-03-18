@@ -6,6 +6,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
+import rx.Observable;
+
 /**
  * Created by Puntar on 2/12/15.
  */
@@ -58,6 +60,16 @@ public class Log {
 
     public long getLogId() {
         return logId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) logId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return logId == ((Log)o).getLogId();
     }
 
     public static class NameHelper {

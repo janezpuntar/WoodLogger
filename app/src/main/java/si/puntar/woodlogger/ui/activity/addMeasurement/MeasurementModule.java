@@ -2,6 +2,7 @@ package si.puntar.woodlogger.ui.activity.addMeasurement;
 
 import dagger.Module;
 import dagger.Provides;
+import si.puntar.woodlogger.manager.rx.LogManager;
 import si.puntar.woodlogger.manager.rx.OrderManager;
 
 /**
@@ -22,7 +23,9 @@ public class MeasurementModule {
     }
 
     @Provides
-    MeasurementPresenter providePresenter(MeasurementView view, OrderManager orderManager) {
-        return new MeasurementPresenterImpl(view, orderManager);
+    MeasurementPresenter providePresenter(MeasurementView view,
+                                          OrderManager orderManager,
+                                          LogManager logManager) {
+        return new MeasurementPresenterImpl(view, orderManager, logManager);
     }
 }

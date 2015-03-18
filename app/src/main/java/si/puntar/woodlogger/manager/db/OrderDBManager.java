@@ -35,22 +35,19 @@ public class OrderDBManager {
                 .assignEmptyForeignCollection(order, Order.NameHelper.MEASURED_LOGS);
     }
 
-    public Dao.CreateOrUpdateStatus createUpdateOrder(Order order) throws SQLException {
+    public int updateOrder(Order order) throws SQLException {
         Dao<Order, Long> orderDao = databaseHelper.getOrderDao();
+        return orderDao.update(order);
+    }
 
-        android.util.Log.e("fdsa", "" + order.getOrderId());
-        Dao.CreateOrUpdateStatus status = orderDao.createOrUpdate(order);
-        android.util.Log.e("fdsa", "" + order.getOrderId());
+    public Order createOrder(Order order) throws SQLException {
+        Dao<Order, Long> orderDao = databaseHelper.getOrderDao();
+        return orderDao.createIfNotExists(order);
+    }
 
-        for (Log log : order.getMeasuredLogs()) {
-            log.setOrder(order);
-            databaseHelper.getLogDao().createOrUpdate(log);
-        }
-
-        Order newOrder = databaseHelper.getOrderDao().queryForId(10l);
-        List<Log> logList = databaseHelper.getLogDao().queryBuilder().where().eq(Log.NameHelper.FK_ORDER, 4).query();
-
-        return status;
+    public void removeOrder(long orderId) throws SQLException {
+        Dao<Order, Long> orderDao = databaseHelper.getOrderDao();
+        orderDao.deleteById(orderId);
     }
 
     public List<Order> getOrderList() throws SQLException {

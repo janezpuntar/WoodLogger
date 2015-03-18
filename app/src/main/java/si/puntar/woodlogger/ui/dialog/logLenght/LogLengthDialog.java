@@ -42,7 +42,6 @@ public class LogLengthDialog extends BaseDialog
     RecyclerView rvStoredLengths;
 
     private StoredLengthAdapter adapter;
-
     private OnItemClickListener logLengthItemClick;
 
     @Override

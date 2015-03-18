@@ -34,13 +34,15 @@ public class LogDBManager {
         return logDao.queryForAll();
     }
 
-    public void saveLog(Log log) throws SQLException {
-
+    public Log createLog(Log log) throws SQLException {
         Dao<Log, Long> logDao = databaseHelper.getLogDao();
-
-        android.util.Log.e("fdsa", "" + log.getLogId());
-        logDao.create(log);
-        android.util.Log.e("fdsa", "" + log.getLogId());
-
+        return logDao.createIfNotExists(log);
     }
+
+    public void removeLog(long logid) throws SQLException {
+        Dao<Log, Long> logDao = databaseHelper.getLogDao();
+        logDao.deleteById(logid);
+    }
+
+
 }

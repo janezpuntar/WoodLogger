@@ -7,4 +7,6 @@ public interface MainPresenter {
     void onResume();
 
     void onPause();
+
+    void removeOrder(long orderId);
 }

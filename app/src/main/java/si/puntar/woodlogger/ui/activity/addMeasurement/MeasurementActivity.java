@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.List;
 
@@ -21,9 +24,13 @@ import butterknife.InjectView;
 import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.app.App;
 import si.puntar.woodlogger.data.model.Log;
+import si.puntar.woodlogger.data.model.Order;
+import si.puntar.woodlogger.ui.activity.addMeasurement.swipeRemove.OnLogClickListener;
+import si.puntar.woodlogger.ui.activity.addMeasurement.swipeRemove.RecyclerLogClickListener;
 import si.puntar.woodlogger.ui.activity.base.BaseActivity;
 import si.puntar.woodlogger.ui.fragment.addMeasurement.AddMeasurementFragment;
 import si.puntar.woodlogger.ui.widget.DividerItemDecoration;
+import si.puntar.woodlogger.ui.widget.SwipeDismissRecyclerViewTouchListener;
 
 /**
  * Created by Puntar on 2/19/15.
@@ -31,17 +38,14 @@ import si.puntar.woodlogger.ui.widget.DividerItemDecoration;
 public class MeasurementActivity extends BaseActivity implements MeasurementView,
         AddMeasurementFragment.OnAddMeasurementFragmentListener {
 
-    @Inject
-    MeasurementPresenter presenter;
+    public static final String  ORDER_ID = "order_id";
+
+    @Inject MeasurementPresenter presenter;
 
     @InjectView(R.id.tb_header) Toolbar toolbar;
-    @InjectView(R.id.rv_current_measurements)
-    RecyclerView rvCurrentMeasurements;
-
-    @InjectView(R.id.et_order_title)
-    EditText etOrderTitle;
-    @InjectView(R.id.et_order_description)
-    EditText etOrderTitleDescription;
+    @InjectView(R.id.rv_current_measurements) RecyclerView rvCurrentMeasurements;
+    @InjectView(R.id.et_order_title) EditText etOrderTitle;
+    @InjectView(R.id.et_order_description) EditText etOrderTitleDescription;
 
     private AddMeasurementFragment addMeasurementFragment;
     private CurrentMeasurementAdapter adapter;
@@ -73,7 +77,7 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle(R.string.add_measurement_activity_title);
+        presenter.onCreate(getIntent().getExtras());
 
         addMeasurementFragment = (AddMeasurementFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.frag_add_measurement);
@@ -87,6 +91,54 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
         adapter = new CurrentMeasurementAdapter(this);
         rvCurrentMeasurements.setAdapter(adapter);
 
+        SwipeDismissRecyclerViewTouchListener touchListener =
+            new SwipeDismissRecyclerViewTouchListener(
+                rvCurrentMeasurements,
+                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(RecyclerView recyclerView, final int[] reverseSortedPositions) {
+
+                        new MaterialDialog.Builder(MeasurementActivity.this)
+                                .title(R.string.remove_questionmark)
+                                .content(R.string.log_will_be_removed)
+                                .positiveText(R.string.yes)
+                                .negativeText(R.string.no)
+                                .callback(new MaterialDialog.ButtonCallback() {
+                                    @Override
+                                    public void onPositive(MaterialDialog dialog) {
+                                        for (int position : reverseSortedPositions) {
+                                            presenter.removeLog(adapter.getItemId(position));
+                                            adapter.removeItem(position);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onNegative(MaterialDialog dialog) {
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                });
+        rvCurrentMeasurements.setOnTouchListener(touchListener);
+        rvCurrentMeasurements.setOnScrollListener(touchListener.makeScrollListener());
+//        rvCurrentMeasurements.addOnItemTouchListener(new RecyclerLogClickListener(this,
+//                new OnLogClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//                        Toast.makeText(MeasurementActivity.this, "Clicked ", Toast.LENGTH_SHORT).show();
+//                    }
+//                }));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onResume();
     }
 
     @Override
@@ -113,9 +165,37 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
     }
 
     @Override
+    public void onBackPressed() {
+
+        new MaterialDialog.Builder(MeasurementActivity.this)
+                .title(R.string.save_questionmark)
+                .content(R.string.save_before_exit)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        presenter.saveMeasurement(etOrderTitle.getText().toString(),
+                                etOrderTitleDescription.getText().toString(),
+                                adapter.getItems());
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        MeasurementActivity.this.finish();
+                    }
+                }).show();
+    }
+
+    @Override
     public void saveMeasurement(Log log) {
         adapter.addItem(log);
         rvCurrentMeasurements.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void setTitle(int title) {
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -131,6 +211,18 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
             sb.append(getString(stringId)+"\n");
         }
         Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setOrder(Order order) {
+        etOrderTitle.setText(order.getTitle());
+        etOrderTitleDescription.setText(order.getDetails());
+        adapter.addItems(order.getMeasuredLogs());
+    }
+
+    @Override
+    public void logRemoved() {
+        Toast.makeText(this, R.string.log_removed, Toast.LENGTH_SHORT).show();
     }
 
     @Override

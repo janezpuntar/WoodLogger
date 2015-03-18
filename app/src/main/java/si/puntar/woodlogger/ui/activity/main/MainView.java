@@ -11,4 +11,8 @@ public interface MainView {
 
     void addOrders(List<Order> item);
 
+    void orderRemoved();
+
+    void setEmptyOrderListHint(boolean visibility);
+
 }

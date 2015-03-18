@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -45,14 +46,29 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
         holder.tvVolume.setText(context.getString(R.string.unit_volume, log.getVolume()));
     }
 
+    void removeItem(int position) {
+        lstLog.remove(position);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return lstLog.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return lstLog.get(position).getLogId();
+    }
+
     public void addItem(Log log) {
         lstLog.add(0, log);
         notifyItemInserted(0);
+    }
+
+    public void addItems(Collection<Log> logs) {
+        lstLog.addAll(logs);
+        notifyDataSetChanged();
     }
 
     public List<Log> getItems() {
