@@ -14,6 +14,8 @@ public interface MeasurementView extends ViewFunctions {
 
     void setTitle(@StringRes int title);
 
+    void setTitle(int title, double totalVolume);
+
     void successfullySaved();
 
     void showMultipleAlerts(List<Integer> alerts);

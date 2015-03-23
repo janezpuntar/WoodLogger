@@ -27,6 +27,7 @@ import si.puntar.woodlogger.ui.activity.addMeasurement.MeasurementActivity;
 import si.puntar.woodlogger.ui.activity.base.BaseActivity;
 import si.puntar.woodlogger.ui.activity.main.swipeDismiss.OnOrderClickListener;
 import si.puntar.woodlogger.ui.activity.main.swipeDismiss.RecyclerOrderClickListener;
+import si.puntar.woodlogger.ui.widget.CustomRecyclerView;
 import si.puntar.woodlogger.ui.widget.SwipeDismissRecyclerViewTouchListener;
 
 
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity implements MainView {
     TextView tvEmptyOrderList;
 
     @InjectView(R.id.rv_previous_measurements)
-    RecyclerView rvPreviousMeasurement;
+    CustomRecyclerView rvPreviousMeasurement;
 
     private OrderAdapter adapter;
 

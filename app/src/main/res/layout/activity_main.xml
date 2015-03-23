@@ -10,9 +10,10 @@
         android:id="@+id/toolbar_layout_holder"
         layout="@layout/toolbar_layout" />
 
-    <android.support.v7.widget.RecyclerView
+    <si.puntar.woodlogger.ui.widget.CustomRecyclerView
         android:id="@+id/rv_previous_measurements"
         android:layout_below="@id/toolbar_layout_holder"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

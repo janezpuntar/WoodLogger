@@ -53,7 +53,7 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
         if (orderId == 0) {
             view.setTitle(R.string.add_measurement_activity_title);
         } else {
-            view.setTitle(R.string.edit_measurement_activity_title);
+            displayTotal(order.getTotalVolume());
         }
     }
 
@@ -115,7 +115,6 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
             getOrder = orderManager.getOrder(new Observer<Order>() {
                 @Override
                 public void onCompleted() {
-
                 }
 
                 @Override
@@ -127,6 +126,7 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
                 public void onNext(Order order) {
                     MeasurementPresenterImpl.this.order = order;
                     view.setOrder(order);
+                    displayTotal(order.getTotalVolume());
                 }
             }, orderId);
         }
@@ -143,6 +143,7 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
             @Override
             public void onCompleted() {
                 view.logRemoved();
+                displayTotal(order.getTotalVolume());
             }
 
             @Override
@@ -152,9 +153,17 @@ public class MeasurementPresenterImpl implements MeasurementPresenter {
 
             @Override
             public void onNext(Log log) {
-
             }
         }, logId);
+    }
+
+    @Override
+    public void displayTotal(double totalVolume) {
+        if (orderId == 0) {
+            view.setTitle(R.string.add_measurement_activity_title_measured, totalVolume);
+        } else {
+            view.setTitle(R.string.edit_measurement_activity_title_measured, totalVolume);
+        }
     }
 
 }

@@ -12,7 +12,9 @@
     <string name="description">Description</string>
 
     <string name="add_measurement_activity_title">Add</string>
-    <string name="edit_measurement_activity_title">Edit</string>
+    <string name="add_measurement_activity_title_measured">Add - Total: %.2f m\u00B3</string>
+    <string name="edit_measurement_activity_title_measured">Edit - Total: %.2f m\u00B3</string>
+
     <string name="log_length_dialog_title">Log length</string>
     <string name="add_diameter_hint">diameter in cm</string>
 

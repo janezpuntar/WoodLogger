@@ -66,11 +66,12 @@
         class="si.puntar.woodlogger.ui.fragment.addMeasurement.AddMeasurementFragment"
         tools:layout="@layout/fragment_add_measurement" />
 
-    <android.support.v7.widget.RecyclerView
+    <si.puntar.woodlogger.ui.widget.CustomRecyclerView
         android:id="@+id/rv_current_measurements"
         android:layout_marginLeft="@dimen/left_right_offset"
         android:layout_marginRight="@dimen/left_right_offset"
         android:layout_marginTop="5dp"
+        android:overScrollMode="never"
         android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

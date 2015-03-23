@@ -20,4 +20,6 @@ public interface MeasurementPresenter {
     void onResume();
 
     void removeLog(long logId);
+
+    void displayTotal(double totalVolume);
 }

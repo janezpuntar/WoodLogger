@@ -190,12 +190,18 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
     @Override
     public void saveMeasurement(Log log) {
         adapter.addItem(log);
+        presenter.displayTotal(adapter.getTotalVolume());
         rvCurrentMeasurements.smoothScrollToPosition(0);
     }
 
     @Override
     public void setTitle(int title) {
         getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public void setTitle(int title, double totalVolume) {
+        getSupportActionBar().setTitle(getString(title, totalVolume));
     }
 
     @Override

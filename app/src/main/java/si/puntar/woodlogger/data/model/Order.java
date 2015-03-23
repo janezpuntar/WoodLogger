@@ -87,21 +87,6 @@ public class Order {
                 sum += item.getVolume();
             }
         }
-
-//        CloseableIterator<Log> iterator = measuredLogs.closeableIterator();
-//        try {
-//            while (iterator.hasNext()) {
-//                Log item = iterator.next();
-//                sum += item.getVolume();
-//            }
-//        } finally {
-//            try {
-//                iterator.close();
-//            } catch (SQLException e) {
-//                Timber.e("");
-//            }
-//        }
-
         return sum;
     }
 

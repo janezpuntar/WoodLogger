@@ -75,6 +75,17 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
         return lstLog;
     }
 
+    public double getTotalVolume() {
+
+        double sum = 0;
+
+        for (Log item : getItems()) {
+            sum += item.getVolume();
+        }
+
+        return sum;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @InjectView(R.id.tv_diameter)
