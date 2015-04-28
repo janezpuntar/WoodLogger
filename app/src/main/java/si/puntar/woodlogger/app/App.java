@@ -29,7 +29,7 @@ public class App extends Application {
     }
 
     public void buildComponentAndInject() {
-        appComponent = Dagger_AppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
 

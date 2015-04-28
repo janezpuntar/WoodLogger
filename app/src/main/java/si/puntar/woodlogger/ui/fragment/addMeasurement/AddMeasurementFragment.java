@@ -50,7 +50,7 @@ public class AddMeasurementFragment extends BaseFragment implements
 
     @Override
     protected void inject() {
-        AddMeasurementComponent addMeasComponent = Dagger_AddMeasurementComponent.builder()
+        AddMeasurementComponent addMeasComponent = DaggerAddMeasurementComponent.builder()
                 .appComponent(App.get(getActivity()).getAppComponent())
                 .addMeasurementModule(new AddMeasurementModule(this)).build();
 

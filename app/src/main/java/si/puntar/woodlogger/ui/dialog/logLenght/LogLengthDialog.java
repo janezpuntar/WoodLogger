@@ -46,7 +46,7 @@ public class LogLengthDialog extends BaseDialog
 
     @Override
     protected void inject() {
-        LogLengthDialogComponent lldc = Dagger_LogLengthDialogComponent.builder()
+        LogLengthDialogComponent lldc = DaggerLogLengthDialogComponent.builder()
                 .appComponent(App.get(getActivity()).getAppComponent())
                 .logLengthDialogModule(new LogLengthDialogModule(this)).build();
 
