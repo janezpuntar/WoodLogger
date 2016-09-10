@@ -34,7 +34,7 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
 
     @Override
     protected void inject() {
-        MeasurementComponent measurementComponent = Dagger_MeasurementComponent.builder()
+        MeasurementComponent measurementComponent = DaggerMeasurementComponent.builder()
                 .appComponent(App.get(this).getComponent())
                 .measurementModule(new MeasurementModule(this)).build();
         measurementComponent.inject(this);

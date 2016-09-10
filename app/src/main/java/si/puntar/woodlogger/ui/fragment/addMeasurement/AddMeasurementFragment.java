@@ -15,7 +15,7 @@ import butterknife.InjectView;
 import si.puntar.woodlogger.R;
 import si.puntar.woodlogger.app.App;
 import si.puntar.woodlogger.data.model.Log;
-import si.puntar.woodlogger.ui.activity.main.Dagger_MainComponent;
+import si.puntar.woodlogger.ui.activity.main.DaggerMainComponent;
 import si.puntar.woodlogger.ui.activity.main.MainComponent;
 import si.puntar.woodlogger.ui.activity.main.MainModule;
 import si.puntar.woodlogger.ui.fragment.baseFragment.BaseFragment;
@@ -38,7 +38,7 @@ public class AddMeasurementFragment extends BaseFragment implements
 
     @Override
     protected void inject() {
-        AddMeasurementComponent addMeasComponent = Dagger_AddMeasurementComponent.builder()
+        AddMeasurementComponent addMeasComponent = DaggerAddMeasurementComponent.builder()
                 .appComponent(App.get(getActivity()).getComponent())
                 .addMeasurementModule(new AddMeasurementModule(this)).build();
 
