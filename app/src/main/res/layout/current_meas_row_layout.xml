@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_marginLeft="@dimen/left_right_offset"
+    android:layout_marginRight="@dimen/left_right_offset"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_length"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/BlackText.Medium"
+        android:gravity="end"
+        android:layout_centerVertical="true"
+        tools:text="4m"
+        />
 
     <TextView
         android:id="@+id/tv_diameter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_toRightOf="@+id/tv_length"
+        android:layout_toEndOf="@+id/tv_length"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textAppearance="@style/BlackText.Medium"
+        android:layout_centerVertical="true"
+        tools:text="3" />
 
     <TextView
         android:id="@+id/tv_volume"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/BlackText.Large"
+        tools:text="23.45m" />
 
-</LinearLayout>
+</RelativeLayout>

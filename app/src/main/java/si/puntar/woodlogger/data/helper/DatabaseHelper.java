@@ -1,5 +1,6 @@
 package si.puntar.woodlogger.data.helper;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -21,7 +22,6 @@ import timber.log.Timber;
 /**
  * Created by Puntar on 2/12/15.
  */
-@Singleton
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "woodlogger.db";
@@ -37,23 +37,39 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+    public void onCreate(SQLiteDatabase database,
+                         ConnectionSource connectionSource) {
         try {
-
-            TableUtils.createTable(connectionSource, Log.class);
-            TableUtils.createTable(connectionSource, Order.class);
             TableUtils.createTable(connectionSource, LogLength.class);
-        } catch (SQLException e) {
+            TableUtils.createTable(connectionSource, Order.class);
+            TableUtils.createTable(connectionSource, Log.class);
+        } catch (Exception e) {
             Timber.e("Cannot create db tables.", e);
+        }
+
+        try {
+            Dao<LogLength, Long> logLengthDao = getLogLengthDao();
+
+            logLengthDao.create(new LogLength(4));
+            logLengthDao.create(new LogLength(5));
+            logLengthDao.create(new LogLength(6));
+            logLengthDao.create(new LogLength(8));
+            logLengthDao.create(new LogLength(10));
+            logLengthDao.create(new LogLength(12));
+            logLengthDao.create(new LogLength(14));
+            logLengthDao.create(new LogLength(16));
+        } catch (SQLException e) {
+            Timber.e("Cannot add default lengths.", e);
         }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-
+    public void onUpgrade(SQLiteDatabase database,
+                          ConnectionSource connectionSource,
+                          int oldVersion, int newVersion) {
     }
 
-    public Dao<Order, Long> getOrderDao() throws SQLException{
+    public Dao<Order, Long> getOrderDao() throws SQLException {
         if (orderDao == null) {
             orderDao = getDao(Order.class);
         }

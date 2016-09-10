@@ -1,12 +1,19 @@
 package si.puntar.woodlogger.app;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
+import si.puntar.woodlogger.ui.DebugUiModule;
+
 
 /**
- * Created by Puntar on 2/17/15.
+ * Created by Puntar on 2/25/15.
  */
-@ApplicationScope
-@Component(modules = { AppModule.class })
-public interface AppComponent extends DebugAppGraph {
+@Singleton
+@Component(modules = {
+        AppModule.class,
+        DebugUiModule.class}
+)
+public interface AppComponent extends AppGraph {
 
 }

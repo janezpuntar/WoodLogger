@@ -1,8 +1,42 @@
 <resources>
     <string name="app_name">Wood Logger</string>
+    <string name="unit">%.1f m</string>
+    <string name="unit_volume">%.2f m\u00B3</string>
+    <string name="unit_diameter">%.1f cm</string>
+
 
     <string name="add">Add</string>
+    <string name="save">Save</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+
     <string name="add_measurement_activity_title">Add</string>
-    <string name="edit_measurement_activity_title">Edit</string>
+    <string name="add_measurement_activity_title_measured">Add - Total: %.2f m\u00B3</string>
+    <string name="edit_measurement_activity_title_measured">Edit - Total: %.2f m\u00B3</string>
+
+    <string name="log_length_dialog_title">Log length</string>
+    <string name="add_diameter_hint">diameter in cm</string>
+
+    <string name="insert_diameter">Insert diameter in cm.\nThan click add button.</string>
+
+    <string name="add_title">Add title.</string>
+    <string name="add_description">Add description.</string>
+    <string name="add_log_measure">Add log measurement(s).</string>
+
+    <string name="something_went_wrong">Something went wrong.</string>
+
+    <string name="order_removed">Order removed.</string>
+    <string name="log_removed">Log removed.</string>
+
+    <string name="remove_questionmark">Remove?</string>
+    <string name="order_will_be_removed">Order will be removed.</string>
+    <string name="log_will_be_removed">Log will be removed.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="empty_list_solution">Click on \u0022ADD\u0022 to\nadd new order.</string>
+    <string name="save_questionmark">Save?</string>
+    <string name="save_before_exit">Do you want to save before exit?</string>
 
 </resources>

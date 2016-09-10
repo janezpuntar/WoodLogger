@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -21,12 +21,14 @@ import si.puntar.woodlogger.data.model.Log;
  */
 public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasurementAdapter.ViewHolder> {
 
+    private Context context;
     private LayoutInflater inflater;
     private List<Log> lstLog;
 
     public CurrentMeasurementAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         lstLog = new ArrayList<>(3);
+        this.context = context;
     }
 
     @Override
@@ -39,9 +41,14 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log log = lstLog.get(position);
 
-        holder.tvLength.setText(String.format("%.00f", log.getLength()));
-        holder.tvDiameter.setText(String.format("%.00f", log.getDiameter()));
-        holder.tvVolume.setText(String.format("%.2f", log.getVolume()));
+        holder.tvLength.setText(context.getString(R.string.unit, log.getLength()));
+        holder.tvDiameter.setText(context.getString(R.string.unit_diameter, log.getDiameter()));
+        holder.tvVolume.setText(context.getString(R.string.unit_volume, log.getVolume()));
+    }
+
+    void removeItem(int position) {
+        lstLog.remove(position);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -49,16 +56,44 @@ public class CurrentMeasurementAdapter extends RecyclerView.Adapter<CurrentMeasu
         return lstLog.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return lstLog.get(position).getLogId();
+    }
+
     public void addItem(Log log) {
-        lstLog.add(log);
+        lstLog.add(0, log);
+        notifyItemInserted(0);
+    }
+
+    public void addItems(Collection<Log> logs) {
+        lstLog.addAll(logs);
         notifyDataSetChanged();
+    }
+
+    public List<Log> getItems() {
+        return lstLog;
+    }
+
+    public double getTotalVolume() {
+
+        double sum = 0;
+
+        for (Log item : getItems()) {
+            sum += item.getVolume();
+        }
+
+        return sum;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.tv_diameter) TextView tvDiameter;
-        @InjectView(R.id.tv_length) TextView tvLength;
-        @InjectView(R.id.tv_volume) TextView tvVolume;
+        @InjectView(R.id.tv_diameter)
+        TextView tvDiameter;
+        @InjectView(R.id.tv_length)
+        TextView tvLength;
+        @InjectView(R.id.tv_volume)
+        TextView tvVolume;
 
         public ViewHolder(View itemView) {
             super(itemView);

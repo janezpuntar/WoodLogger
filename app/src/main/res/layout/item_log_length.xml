@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_log_length"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/left_right_offset"
+        android:paddingRight="@dimen/left_right_offset"
+        android:paddingTop="@dimen/left_right_offset_half"
+        android:paddingBottom="@dimen/left_right_offset_half"
+        android:textAppearance="@style/BlackText.Medium"
+        tools:text="4"
+        />
+
+</LinearLayout>

@@ -9,15 +9,70 @@
     <include
         layout="@layout/toolbar_layout" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_offset"
+        android:layout_marginRight="@dimen/left_right_offset"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_order_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:gravity="center"
+            android:layout_alignTop="@+id/et_order_title"
+            android:layout_alignBottom="@id/et_order_title"
+            android:textAppearance="@style/BlackText.Medium.Bold"
+            />
+
+        <EditText
+            android:id="@+id/et_order_title"
+            android:layout_toRightOf="@id/tv_order_title"
+            android:layout_toEndOf="@id/tv_order_title"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:singleLine="true"
+            android:gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_order_description"
+            android:layout_below="@id/tv_order_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textAppearance="@style/BlackText.Medium.Bold"
+            />
+
+        <EditText
+            android:layout_below="@id/tv_order_description"
+            android:id="@+id/et_order_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
     <fragment
         android:id="@+id/frag_add_measurement"
+        android:layout_marginLeft="@dimen/left_right_offset"
+        android:layout_marginRight="@dimen/left_right_offset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         class="si.puntar.woodlogger.ui.fragment.addMeasurement.AddMeasurementFragment"
         tools:layout="@layout/fragment_add_measurement" />
 
-    <android.support.v7.widget.RecyclerView
+    <si.puntar.woodlogger.ui.widget.CustomRecyclerView
         android:id="@+id/rv_current_measurements"
+        android:layout_marginLeft="@dimen/left_right_offset"
+        android:layout_marginRight="@dimen/left_right_offset"
+        android:layout_marginTop="5dp"
+        android:overScrollMode="never"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

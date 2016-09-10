@@ -1,9 +1,9 @@
 package si.puntar.woodlogger.ui.activity.addMeasurement;
 
-import javax.inject.Inject;
-
 import dagger.Module;
 import dagger.Provides;
+import si.puntar.woodlogger.manager.rx.LogManager;
+import si.puntar.woodlogger.manager.rx.OrderManager;
 
 /**
  * Created by Puntar on 2/19/15.
@@ -17,11 +17,15 @@ public class MeasurementModule {
         this.view = view;
     }
 
-    @Provides MeasurementView provideView() {
+    @Provides
+    MeasurementView provideView() {
         return view;
     }
 
-    @Provides MeasurementPresenter providePresenter(MeasurementView view) {
-        return new MeasurementPresenterImpl(view);
+    @Provides
+    MeasurementPresenter providePresenter(MeasurementView view,
+                                          OrderManager orderManager,
+                                          LogManager logManager) {
+        return new MeasurementPresenterImpl(view, orderManager, logManager);
     }
 }
