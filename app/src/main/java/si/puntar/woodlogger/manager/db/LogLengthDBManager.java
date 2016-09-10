@@ -3,6 +3,8 @@ package si.puntar.woodlogger.manager.db;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,7 +28,20 @@ public class LogLengthDBManager {
     public List<LogLength> getLogLengths() throws SQLException {
         Dao<LogLength, Long> logLengthDao = databaseHelper.getLogLengthDao();
 
-        return logLengthDao.queryForAll();
+        List<LogLength> data = logLengthDao.queryForAll();
+
+        Collections.sort(data, new Comparator<LogLength>() {
+            @Override
+            public int compare(LogLength logLength, LogLength t1) {
+                if (logLength.getLength() - t1.getLength() >= 0) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+
+        return data;
     }
 
     public LogLength getLogLength() throws SQLException {

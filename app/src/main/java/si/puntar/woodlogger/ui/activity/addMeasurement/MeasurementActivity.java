@@ -115,6 +115,7 @@ public class MeasurementActivity extends BaseActivity implements MeasurementView
                                             presenter.removeLog(adapter.getItemId(position));
                                             adapter.removeItem(position);
                                         }
+                                        presenter.displayTotal(adapter.getTotalVolume());
                                     }
 
                                     @Override

@@ -25,7 +25,7 @@ import timber.log.Timber;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "woodlogger.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private Dao<Log, Long> logDao;
     private Dao<Order, Long> orderDao;
@@ -53,11 +53,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             logLengthDao.create(new LogLength(4));
             logLengthDao.create(new LogLength(5));
             logLengthDao.create(new LogLength(6));
+            logLengthDao.create(new LogLength(7));
             logLengthDao.create(new LogLength(8));
+            logLengthDao.create(new LogLength(9));
             logLengthDao.create(new LogLength(10));
+            logLengthDao.create(new LogLength(11));
             logLengthDao.create(new LogLength(12));
+            logLengthDao.create(new LogLength(13));
             logLengthDao.create(new LogLength(14));
+            logLengthDao.create(new LogLength(15));
             logLengthDao.create(new LogLength(16));
+            logLengthDao.create(new LogLength(17));
+            logLengthDao.create(new LogLength(18));
+            logLengthDao.create(new LogLength(19));
+            logLengthDao.create(new LogLength(20));
         } catch (SQLException e) {
             Timber.e("Cannot add default lengths.", e);
         }
@@ -67,6 +76,25 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database,
                           ConnectionSource connectionSource,
                           int oldVersion, int newVersion) {
+
+        if (newVersion == 2) {
+            try {
+                Dao<LogLength, Long> logLengthDao = getLogLengthDao();
+
+                logLengthDao.create(new LogLength(7));
+                logLengthDao.create(new LogLength(9));
+                logLengthDao.create(new LogLength(11));
+                logLengthDao.create(new LogLength(13));
+                logLengthDao.create(new LogLength(15));
+                logLengthDao.create(new LogLength(17));
+                logLengthDao.create(new LogLength(18));
+                logLengthDao.create(new LogLength(19));
+                logLengthDao.create(new LogLength(20));
+
+            } catch (SQLException e) {
+                Timber.e("Cannot add default lengths.", e);
+            }
+        }
     }
 
     public Dao<Order, Long> getOrderDao() throws SQLException {
